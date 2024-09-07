@@ -34,7 +34,7 @@ def añadirevento():
         agenda_listbox.insert(tk.END, event)
         event_entry.delete(0, tk.END)
     else:
-        messagebox.showwarning("Advertencia", "Evento no esta vacio")
+        messagebox.showwarning("Advertencia", "Esta vacio")
 
 def borrarevento():
     try:
