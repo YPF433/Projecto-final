@@ -3,7 +3,7 @@ from tkinter import messagebox
 from datetime import datetime
 import calendar
 
-def click_button(value):
+def click(value):
     current_text = calc_display.get()
     if current_text == "0" and value.isdigit():
         calc_display.delete(0, tk.END)
@@ -11,11 +11,11 @@ def click_button(value):
     else:
         calc_display.insert(tk.END, value)
 
-def clear_display():
+def limpiarpantalla():
     calc_display.delete(0, tk.END)
     calc_display.insert(0, "0")
 
-def calculate_result():
+def resultado():
     try:
         expression = calc_display.get()
         expression = expression.replace('×', '*').replace('÷', '/')
@@ -28,7 +28,7 @@ def calculate_result():
         calc_display.insert(tk.END, "0")
 
 
-def add_event():
+def añadirevento():
     event = event_entry.get()
     if event:
         agenda_listbox.insert(tk.END, event)
@@ -36,7 +36,7 @@ def add_event():
     else:
         messagebox.showwarning("Advertencia", "Evento no esta vacio")
 
-def delete_event():
+def borrarevento():
     try:
         selected_event_index = agenda_listbox.curselection()[0]
         agenda_listbox.delete(selected_event_index)
@@ -44,14 +44,14 @@ def delete_event():
         messagebox.showwarning("OJOO", "NO AHI UN EVENTO SELECCIONADOOOO")
 
 # Función para actualizar el reloj
-def update_clock():
+def actualizarreloj():
     now = datetime.now()
     time_str = now.strftime("%I:%M %p")
     clock_label.config(text=time_str)
-    clock_label.after(1000, update_clock)  # Actualizar cada segundo
+    clock_label.after(1000, actualizarreloj)
 
 # Función para mostrar el calendario
-def show_calendar():
+def mostrarcalendario():
     try:
         year = int(year_spinbox.get())
         month = int(month_spinbox.get())
@@ -87,15 +87,15 @@ for button in buttons:
     if len(button) == 4:
         text, row, col, colspan = button
         if text == '=':
-            b = tk.Button(calc_frame, text=text, command=calculate_result)
+            b = tk.Button(calc_frame, text=text, command=resultado)
         elif text == 'C':
-            b = tk.Button(calc_frame, text=text, command=clear_display)
+            b = tk.Button(calc_frame, text=text, command=limpiarpantalla)
         else:
-            b = tk.Button(calc_frame, text=text, command=lambda t=text: click_button(t))
+            b = tk.Button(calc_frame, text=text, command=lambda t=text: click(t))
         b.grid(row=row, column=col, columnspan=colspan, sticky="nsew")
     elif len(button) == 3:
         text, row, col = button
-        b = tk.Button(calc_frame, text=text, command=lambda t=text: click_button(t))
+        b = tk.Button(calc_frame, text=text, command=lambda t=text: click(t))
         b.grid(row=row, column=col, sticky="nsew")
 
 # Crear la agenda
@@ -113,10 +113,10 @@ scrollbar.config(command=agenda_listbox.yview)
 event_entry = tk.Entry(root, width=50)
 event_entry.pack(pady=5)
 
-add_button = tk.Button(root, text="Añadir evento", command=add_event)
+add_button = tk.Button(root, text="Añadir evento", command=añadirevento)
 add_button.pack(pady=5)
 
-delete_button = tk.Button(root, text="Borrar evento", command=delete_event)
+delete_button = tk.Button(root, text="Borrar evento", command=borrarevento)
 delete_button.pack(pady=5)
 
 # Crear el reloj
@@ -125,7 +125,7 @@ clock_frame.pack(pady=10)
 
 clock_label = tk.Label(clock_frame, font=('Arial', 40))
 clock_label.pack()
-update_clock()
+actualizarreloj()
 
 # Crear el calendario
 calendar_frame = tk.Frame(root)
@@ -141,7 +141,7 @@ month_spinbox.grid(row=0, column=1, padx=5)
 month_spinbox.delete(0, tk.END)
 month_spinbox.insert(0, "9")
 
-show_cal_button = tk.Button(calendar_frame, text="Mostrar calendario", command=show_calendar)
+show_cal_button = tk.Button(calendar_frame, text="Mostrar calendario", command=mostrarcalendario)
 show_cal_button.grid(row=0, column=2, padx=5)
 
 calendar_text = tk.Text(calendar_frame, width=20, height=8, state=tk.DISABLED)
@@ -155,10 +155,3 @@ for frame in [calc_frame, agenda_frame, clock_frame, calendar_frame]:
         frame.grid_columnconfigure(i, weight=1)
 
 root.mainloop()
-
-
-
-
-
-
-
