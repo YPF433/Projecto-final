@@ -1,68 +1,8 @@
-# import tkinter as tk
-
-# # Función para mostrar el valor en la pantalla
-# def click_button(value):
-#     current_text = entry.get()
-#     entry.delete(0, tk.END)
-#     entry.insert(0, current_text + value)
-
-# # Función para realizar la operación
-# def evaluate_expression():
-#     try:
-#         result = eval(entry.get())
-#         entry.delete(0, tk.END)
-#         entry.insert(0, str(result))
-#     except Exception as e:
-#         entry.delete(0, tk.END)
-#         entry.insert(0, 'Error')
-
-# # Función para borrar la pantalla
-# def clear_entry():
-#     entry.delete(0, tk.END)
-
-# # Configuración de la ventana principal
-# root = tk.Tk()
-# root.title("Calculadora")
-
-# # Configuración de la pantalla de entrada
-# entry = tk.Entry(root, width=20, borderwidth=2, relief="solid")
-# entry.grid(row=0, column=0, columnspan=4)
-
-# # Botones de la calculadora
-# buttons = [
-#     ('7', 1, 0), ('8', 1, 1), ('9', 1, 2), ('/', 1, 3),
-#     ('4', 2, 0), ('5', 2, 1), ('6', 2, 2), ('*', 2, 3),
-#     ('1', 3, 0), ('2', 3, 1), ('3', 3, 2), ('-', 3, 3),
-#     ('0', 4, 0), ('.', 4, 1), ('+', 4, 2), ('=', 4, 3),
-#     ('C', 5, 0, 4)
-# ]
-
-# # Creación de botones y su colocación en la ventana
-# for (text, row, col, *span) in buttons:
-#     if text == 'C':
-#         button = tk.Button(root, text=text, command=clear_entry, width=5, height=2)
-#         button.grid(row=row, column=col, columnspan=span[0], sticky='nsew')
-#     elif text == '=':
-#         button = tk.Button(root, text=text, command=evaluate_expression, width=5, height=2)
-#         button.grid(row=row, column=col, sticky='nsew')
-#     else:
-#         button = tk.Button(root, text=text, command=lambda t=text: click_button(t), width=5, height=2)
-#         button.grid(row=row, column=col, sticky='nsew')
-
-# # Ajustar el tamaño de las celdas para que los botones se expandan
-# for i in range(6):
-#     root.grid_rowconfigure(i, weight=1)
-#     root.grid_columnconfigure(i, weight=1)
-
-# # Ejecutar la aplicación
-# root.mainloop()
-
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
 import calendar
 
-# Funciones para la calculadora
 def click_button(value):
     current_text = calc_display.get()
     if current_text == "0" and value.isdigit():
@@ -78,31 +18,30 @@ def clear_display():
 def calculate_result():
     try:
         expression = calc_display.get()
-        # Reemplazar los caracteres matemáticos para evitar problemas
         expression = expression.replace('×', '*').replace('÷', '/')
         result = eval(expression)
         calc_display.delete(0, tk.END)
         calc_display.insert(tk.END, str(result))
     except Exception as e:
-        messagebox.showerror("Error", "Invalid Input")
+        messagebox.showerror("Error", "Invalido")
         calc_display.delete(0, tk.END)
         calc_display.insert(tk.END, "0")
 
-# Funciones para la agenda
+
 def add_event():
     event = event_entry.get()
     if event:
         agenda_listbox.insert(tk.END, event)
         event_entry.delete(0, tk.END)
     else:
-        messagebox.showwarning("Warning", "Event cannot be empty")
+        messagebox.showwarning("Advertencia", "Evento no esta vacio")
 
 def delete_event():
     try:
         selected_event_index = agenda_listbox.curselection()[0]
         agenda_listbox.delete(selected_event_index)
     except IndexError:
-        messagebox.showwarning("Warning", "No event selected")
+        messagebox.showwarning("OJOO", "NO AHI UN EVENTO SELECCIONADOOOO")
 
 # Función para actualizar el reloj
 def update_clock():
@@ -122,7 +61,7 @@ def show_calendar():
         calendar_text.insert(tk.END, cal)
         calendar_text.config(state=tk.DISABLED)
     except ValueError:
-        messagebox.showerror("Error", "Invalid Year or Month")
+        messagebox.showerror("Error", "Año invalido")
 
 # Crear la ventana principal
 root = tk.Tk()
